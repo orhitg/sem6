@@ -1,0 +1,4 @@
+*.out
+lex.yy.c
+yy.tab.c
+*~
