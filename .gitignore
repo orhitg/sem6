@@ -1,4 +1,6 @@
 *.out
 lex.yy.c
-yy.tab.c
+y.tab.c
+y.tab.h
+*.exe
 *~
