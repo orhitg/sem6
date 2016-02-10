@@ -15,6 +15,7 @@ int yyerror(char const* err){
 %left '='
 %left '+' '-'
 %left '*' '/'
+%nonassoc UMINUS
 
 %%
 
@@ -22,8 +23,9 @@ statement : expr {cout<<"\nResult:\t"<<$1<<endl;};
 
 expr: expr '+' expr { $$ = $1 + $3;}
 	| expr '-' expr { $$ = $1 - $3;}
-	| expr '/' expr { if($1 == 0) yyerror("Division by zero"); $$ = $1 / $3;}
+	| expr '/' expr { if($3 == 0) yyerror("Division by zero"); $$ = $1 / $3;}
 	| expr '*' expr { $$ = $1 * $3;}
+	| '-' expr %prec UMINUS{ $$ = -$2;}
 	| NUM 			{ $$ = $1;};
 
 %%
