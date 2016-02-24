@@ -4,6 +4,7 @@
 using namespace std;
 
 %}
+%option noyywrap
 
 %%
 [a]    {return yytext[0];}
