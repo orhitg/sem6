@@ -24,25 +24,18 @@ int main(){
 	int client_cout = 0;
 	while(Runserver){
 		int client_desc = accept(server_desc, NULL,NULL);
-		cout<<c++<<endl;
-		int pid = fork();
-		
-		if(pid > 0)
-			continue;
-		else if(pid == 0){
-			char msg[4096];
-			int msg_len = 0;
+		char msg[4096];
+		int msg_len = 0;
 			
-			while((msg_len = read(client_desc, msg, 4096)) > 0){
-				if(msg[0] == 'Q' && msg[1] == 'T'){
-					Runserver = false;
-					break;
-				}//if
-				else
-					write(client_desc, msg, msg_len);
-			}//while
-		}//else if
+		while((msg_len = read(client_desc, msg, 4096)) > 0){
+			if(msg[0] == 'Q' && msg[1] == 'T'){
+				Runserver = false;
+				break;
+			}//if
+			else
+				write(client_desc, msg, msg_len);
+		}//while
 	
-	}//while
+		}//while
 
 }//main

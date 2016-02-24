@@ -1,11 +1,10 @@
 %{
 #include<iostream>
 using namespace std;
-int match_count = 0;
+int count = 0;
 int yylex();
 int yyerror(char const* err){
-	//cerr<<err<<endl;
-	match_count = -1;
+	cerr<<err<<endl;
 	return 0;
 }
 
@@ -15,22 +14,20 @@ int yyerror(char const* err){
 
 %%
 
-statement : expr {match_count++;}; 
+statement : expr '\n'	{if(count >= 10)
+							cout<<"Pattern Matched"<<endl;
+							else
+								yyerror("Pattern not matched");}; 
 
 expr: A 'b';
 
-A : 'a' A
-  | 'a';
+A : 'a' A				{count++;}
+  | 'a' 				{count++;};
   
 %%
 int main(){
 	cout<<"\nEnter Expr\n";
 	yyparse();
-	
-	if(match_count == 1)
-		cout<<"Pattern Matched"<<endl;
-	else
-		cout<<"Syntax error"<<endl;
 	
 	return 0;
 }//main
