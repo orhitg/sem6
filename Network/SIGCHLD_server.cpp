@@ -1,4 +1,5 @@
 #include<iostream>
+#include<stdio.h>
 #include<sys/socket.h>
 #include<netinet/in.h>
 #include<unistd.h>
@@ -8,6 +9,7 @@
 using namespace std;
 
 void SIGCHLD_Handler(int sig){
+	//fputs("\nSIGCHLD Intercepted",stdout);
 	cout<<"\nSIGCHLD Intercepted";
 	fflush(stdout);
 	int status;
@@ -31,32 +33,28 @@ int main(){
 	
 	bool Runserver = true;
 	
-	int client_cout = 0;
-	
 	signal(SIGCHLD,SIGCHLD_Handler);
 	
 	while(Runserver){
 		int client_desc = accept(server_desc, NULL,NULL);
-		cout<<c++<<endl;
+		
 		int pid = fork();
 		
 		if(pid > 0){
+			close(client_desc);
 			continue;
 		}
 		else if(pid == 0){
+			close(server_desc);
 			char msg[4096];
 			int msg_len = 0;
 			
 			while((msg_len = read(client_desc, msg, 4096)) > 0){
-				if(msg[0] == 'Q' && msg[1] == 'T'){
-					Runserver = false;
-					break;
-				}//if
-				else
 					write(client_desc, msg, msg_len);
 			}//while
+			Runserver = false;
 		}//else if
-	
+		close(client_desc);
 	}//while
 
 }//main
