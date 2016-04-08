@@ -10,6 +10,6 @@ int line = 0;
 
 int main(){
 	yylex();
-	printf("No of id(s) found : %d and line : ",count, line);
+	printf("No of id(s) found : %d and line : %d",count, line);
 	return 0;
 }

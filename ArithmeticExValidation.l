@@ -11,8 +11,6 @@ using namespace std;
 %%
 
 int main(){
-
-	char filename[100];
 	cout<<"\nEnter Expression(Q for Quit) :\n\n";
 		
 	yylex();
