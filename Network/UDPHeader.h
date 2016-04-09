@@ -14,16 +14,15 @@ void dgEcho(int sockfd, sockaddr *cliaddr){
 	socklen_t len;
 	char mesg[MAXLINE];
 	
-	cout<<"In dgEcho"<<endl;
 	while(true){
-		cout<<"in for loop"<<endl;
 		
 		len = sizeof(cliaddr);
 		n = recvfrom(sockfd, mesg, MAXLINE, 0, (sockaddr*)&cliaddr, &len);
 		
-		cout<<"recieved"<<endl;
+		if((mesg[0] == 'Q' || mesg[0] == 'q') && n == 2)
+			break;
+		
 		sendto(sockfd, mesg, n, 0, (sockaddr*)&cliaddr, len);
-		cout<<"sent"<<endl;
 	}
 }
 
@@ -31,15 +30,16 @@ void dgClient(int server_desc, const sockaddr *server, socklen_t servlen){
 	int n, msglen;
 	char sendline[MAXLINE], recvline[MAXLINE+1];
 	
-	cout<<"In dgClient"<<endl;
+	cout<<"Enter 'Q' or 'q' to quit"<<endl;
 	while(true){
 		msglen = read(fileno(stdin),sendline, MAXLINE);
 		sendto(server_desc, sendline, msglen, 0, server, servlen);
-		cout<<"sent"<<endl;
 		
+		if(sendline[0] == 'Q' || sendline[0] == 'q')
+			break;
+				
 		n = recvfrom(server_desc, recvline, MAXLINE, 0, NULL, NULL);
-		cout<<"recieved"<<endl;
-		
+			
 		recvline[n] = 0;
 		write(fileno(stdout), recvline, n);
 	}

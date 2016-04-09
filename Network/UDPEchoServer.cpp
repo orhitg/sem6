@@ -1,7 +1,7 @@
 #include "UDPHeader.h"
 
 int main(int args, char* argv[]) {
-	int serv_desc;
+	int serv_desc = socket(AF_INET, SOCK_DGRAM,0);
 	struct sockaddr_in serv_addr , client;
 	
 	serv_desc = socket(AF_INET,SOCK_DGRAM,0);
@@ -23,5 +23,6 @@ int main(int args, char* argv[]) {
 	
 	dgEcho(serv_desc, (sockaddr*)&client);
 	
+	cout<<"exited"<<endl;
 	return 0;
 }

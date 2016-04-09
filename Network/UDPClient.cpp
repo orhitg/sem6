@@ -3,7 +3,7 @@
 using namespace std;
 
 int main(){
-	int serv_desc;
+	int serv_desc = socket(AF_INET, SOCK_DGRAM,0);
 	struct sockaddr_in serv_addr;
 	
 	bzero(&serv_addr , sizeof(serv_addr));
@@ -16,5 +16,6 @@ int main(){
 	
 	dgClient(serv_desc, (sockaddr*)&serv_addr, sizeof(serv_addr));
 	
+	cout<<"exited"<<endl;
 	return 0;	
 }
