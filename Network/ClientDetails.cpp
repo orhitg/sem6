@@ -22,11 +22,13 @@ int main(){
 	socklen_t client_addr_len = sizeof(client_addr);
 	
 	int client_desc = accept(server_desc, (sockaddr*)&client_addr,&client_addr_len);
-	char buff[256];
+	char buff[INET_ADDRSTRLEN];
 	
 	cout<<"Client Details\n";
 	cout<<"IP Addr : ";
-	cout<<inet_ntop(AF_INET,client_addr.sin_addr,buff,sizeof(buff));
+	inet_ntop(AF_INET,(void*)&client_addr.sin_addr,buff,sizeof(buff));
+	
+	cout<<buff;
 	
 	cout<<"\nPort : "<<ntohs(client_addr.sin_port);
 	
