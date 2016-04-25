@@ -7,6 +7,6 @@ using namespace std;
 %option noyywrap
 
 %%
-[a]    {return yytext[0];}
+[a]{10,}     {return A;}
 [b]	   {return yytext[0];}
-\n	   {return 0;}
+\n	   {return yytext[0];}
